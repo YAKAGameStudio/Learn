@@ -24,7 +24,7 @@ namespace ConsoleAuthentication
             Console.WriteLine("Welcome to the LoginWithCustomID Demo \n");
 
             // Provide your titleId from PlayFab Game Manager
-            PlayFabSettings.staticSettings.TitleId = "12817";
+            PlayFabSettings.staticSettings.TitleId = "YourCustomID";
 
 
             // Retrieve additional information
