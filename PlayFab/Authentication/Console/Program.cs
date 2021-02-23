@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using PlayFab;
 using PlayFab.ClientModels;
 
 /// <summary>
-/// Demonstrate how to login in PlayFab
+/// Demonstrate how to authenticate user in PlayFab
 /// Note: This is the first level based on LoginWithCustomID
 /// See - https://yaka.studio/authentication/LoginWithCustomID-console
 /// </summary>
@@ -16,15 +15,13 @@ namespace ConsoleAuthentication
     {
         /// <summary>
         /// Main program used on startup
-        /// Note: We take advantage of the async nature of API calls, and the C# async/await feature keywords.
-        /// See - https://docs.microsoft.com/en-us/dotnet/csharp/async
         /// </summary>
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the LoginWithCustomID Demo \n");
 
             // Provide your titleId from PlayFab Game Manager
-            PlayFabSettings.staticSettings.TitleId = "YourCustomID";
+            PlayFabSettings.staticSettings.TitleId = "YourTitleId";
 
 
             // Retrieve additional information
@@ -36,18 +33,24 @@ namespace ConsoleAuthentication
 
             };
 
+            var CustomTags = new Dictionary<string, string>()
+            {
+                {"Build", "Dev"},
+                {"Source", "Console"}
+            };
+
             // Initiate Login Request
             var LoginRequest = new LoginWithCustomIDRequest
             {
                 // Custom unique identifier for the user, use anything you want
-                CustomId = "GettingStartedGuide",
+                CustomId = "ConsoleAuthentication",
                 
                 // Automatically create a PlayFab account if one is not currently linked to this ID.
                 CreateAccount = true,
-                
+
                 // The optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
-                // CustomTags = 
-                
+                CustomTags = CustomTags,
+
                 // Request additional Information
                 InfoRequestParameters = LoginRequestParams
             };
@@ -79,14 +82,11 @@ namespace ConsoleAuthentication
             if (apiError != null)
             {
                 // When Error Occur
-                Console.ForegroundColor = ConsoleColor.Red; // Make the error more visible
                 Console.WriteLine("Something went wrong with your API call :( \nHere's some debug information:");
                 
                 // Print issue wthe the PlayFabUtil class
                 Console.WriteLine(PlayFabUtil.GenerateErrorReport(apiError));
                 Console.WriteLine(apiError.GenerateErrorReport());
-
-                Console.ForegroundColor = ConsoleColor.Gray; // Reset to normal
             }
             else
             {
@@ -102,23 +102,27 @@ namespace ConsoleAuthentication
                 Console.WriteLine("LastLoginTime:       " + apiResult.LastLoginTime);
 
                 // Information get with the LoginRequestParams
-                // About GetPlayerProfile
-                Console.WriteLine("\nWe get the following information from GetPlayerProfile \n");
-                Console.WriteLine("DisplayName:         " + PlayerProfile.DisplayName);
-                Console.WriteLine("Created:             " + PlayerProfile.Created);
-                Console.WriteLine("ValueToDateInUSD:    " + PlayerProfile.TotalValueToDateInUSD);
-
-                // About GetUserVirtualCurrency
-                Console.WriteLine("\nWe get the following information from GetUserVirtualCurrency \n");
-                Console.WriteLine("User Currencies own:       " + PlayerCurrencies.Count);
-                
-                foreach(var PlayerCurrency in PlayerCurrencies)
-                {
-                    Console.WriteLine("---");
-                    Console.WriteLine("Currency:            " + PlayerCurrency.Key);
-                    Console.WriteLine("Value:               " + PlayerCurrency.Value);
+                if (PlayerProfile != null)
+                { 
+                    // About GetPlayerProfile
+                    Console.WriteLine("\nWe get the following information from GetPlayerProfile \n");
+                    Console.WriteLine("DisplayName:         " + PlayerProfile.DisplayName);
+                    Console.WriteLine("Created:             " + PlayerProfile.Created);
+                    Console.WriteLine("ValueToDateInUSD:    " + PlayerProfile.TotalValueToDateInUSD);
                 }
+                // About GetUserVirtualCurrency
+                if (PlayerCurrencies != null)
+                {
+                    Console.WriteLine("\nWe get the following information from GetUserVirtualCurrency \n");
+                    Console.WriteLine("User Currencies own:       " + PlayerCurrencies.Count);
 
+                    foreach (var PlayerCurrency in PlayerCurrencies)
+                    {
+                        Console.WriteLine("---");
+                        Console.WriteLine("Currency:            " + PlayerCurrency.Key);
+                        Console.WriteLine("Value:               " + PlayerCurrency.Value);
+                    }
+                }                
             }
         }
     }
