@@ -8,7 +8,7 @@ Learn how to install one the most widely used engines to develop Games and AR/VR
 ## Step-by-Step
 ### Check your system
 You should be already up to date, but double check that you have a 64 bits Windows 10.
-All requirements are on : (https://docs.unity3d.com/Manual/system-requirements.html)
+All requirements are on: https://docs.unity3d.com/Manual/system-requirements.html
 
 ### Install Unity Hub
 Unity Hub is a standalone application that streamlines the way you find, download, and manage your Unity Projects and installations.
@@ -17,7 +17,7 @@ You will use the Hub at least to:
 - Create your Project, and manage the installation of multiple versions of the Editor.
 
 #### Get started
-Download the Unity hub on: (https://unity3d.com/get-unity/download) then run it.
+[Download the Unity hub](https://unity3d.com/get-unity/download) then run it.
 Depending your situation, you may have to acquire a license.
 
 #### One Step installer
