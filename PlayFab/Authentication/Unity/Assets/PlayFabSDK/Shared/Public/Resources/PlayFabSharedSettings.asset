@@ -15,7 +15,7 @@ MonoBehaviour:
   TitleId: BBEFC
   DeveloperSecretKey: 
   ProductionEnvironmentUrl: 
-  RequestType: 2
+  RequestType: 0
   AdvertisingIdType: 
   AdvertisingIdValue: 
   DisableAdvertising: 0

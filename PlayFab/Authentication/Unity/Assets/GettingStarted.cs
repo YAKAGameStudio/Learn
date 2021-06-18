@@ -12,8 +12,11 @@ public class GettingStarted : MonoBehaviour {
 
         var LoginRequest = new LoginWithCustomIDRequest()
         {
+            // Your Title setup in PlayFab SDK
             TitleId = PlayFabSettings.TitleId,
+            // Custom unique identifier for the user, use anything you want.
             CustomId = SystemInfo.deviceUniqueIdentifier,
+            // Automatically create a PlayFab account if one is not currently linked to this ID.
             CreateAccount = true
         };
 
